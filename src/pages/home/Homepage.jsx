@@ -1,14 +1,23 @@
 // Importing React package
-import React from "react";
+import React, { useEffect } from "react";
+import { testAPI } from "../../apis/Api";
 
 // Creating Homepage UI
 const Homepage = () => {
-    return (
-        <div>
-         Image Slider
-         Cards
-        </div>
-    )
-}
+  
+  // Print Hello!, when page loads(Automatic)
+    useEffect(() => {
+        console.log("Hello!")
 
-export default Homepage
+        //trigger testAPI
+        testAPI().then((res) => {
+            console.log(res) // Test API is Working
+        })
+
+    })
+    
+
+  return <div>HomePage</div>;
+};
+
+export default Homepage;
