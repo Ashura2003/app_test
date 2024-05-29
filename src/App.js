@@ -21,7 +21,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        /* Add a new route for the profile page */
+        {/* Add a new route for the profile page */}
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </Router>
