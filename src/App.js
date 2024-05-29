@@ -8,18 +8,21 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 
 // Toast Config
-import { ToastContainer} from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 function App() {
   return (
     <Router>
-      <Navbar/>
-      <ToastContainer/>
+      <Navbar />
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        /* Add a new route for the profile page */
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </Router>
   );

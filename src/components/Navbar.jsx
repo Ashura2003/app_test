@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 
 // Creating Navbar UI
 const Navbar = () => {
+  //Writiing the logic for Navbar for logged in user
+
+  // Getting user data from local storage
+  const user = JSON.parse(localStorage.getItem("user"));
+
   return (
     <div className="container">
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -41,20 +46,54 @@ const Navbar = () => {
               </li>
             </ul>
             <form className="d-flex" role="search">
-              <Link
-                to={"/login"}
-                className="btn btn-primary ms-2"
-                type="submit"
-              >
-                Login
-              </Link>
-              <Link
-                to={"/register"}
-                className="btn btn-success ms-2"
-                type="submit"
-              >
-                Register
-              </Link>
+              {user ? (
+                // Logic for logged in user
+                <div className="dropdown">
+                  <button
+                    className="btn btn-success dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Welcome, {user.firstName}!
+                  </button>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <a className="dropdown-item " href="#">
+                        Profile
+                      </a>
+                    </li>
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Settings
+                      </a>
+                    </li>
+                    <li>
+                      <a className="dropdown-item" href="#">
+                        Log Out
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                // Logic for not logged in user
+                <>
+                  <Link
+                    to={"/login"}
+                    className="btn btn-primary ms-2"
+                    type="submit"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to={"/register"}
+                    className="btn btn-success ms-2"
+                    type="submit"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </form>
           </div>
         </div>
