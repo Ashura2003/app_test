@@ -11,6 +11,7 @@ import Register from "./pages/register/Register";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import UpdateProduct from "./pages/admin/update product/UpdateProduct";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         {/* Add a new route for the profile page */}
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/update/:id" element={<UpdateProduct />} />
       </Routes>
     </Router>
   );

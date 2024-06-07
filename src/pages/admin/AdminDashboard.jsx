@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { createProductApi, getProductsApi } from "../../apis/Api";
+import {
+  createProductApi,
+  deleteProduct,
+  getProductsApi,
+} from "../../apis/Api";
 
 const AdminDashboard = () => {
   // State for  input fields
@@ -56,6 +61,7 @@ const AdminDashboard = () => {
       .then((res) => {
         // For Suceessful API connection
         if (res.status === 201) {
+          window.location.reload();
           toast.success(res.data.message);
         }
       })
@@ -73,6 +79,31 @@ const AdminDashboard = () => {
           toast.error("Something went wrong");
         }
       });
+  };
+
+  // Handle Delete Product
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
+    if (confirmDelete) {
+      // Calling API
+      deleteProduct(id)
+        .then((res) => {
+          // Response from the API
+          if (res.status === 201) {
+            window.location.reload();
+            toast.success(res.data.message);
+          }
+        })
+        .catch((error) => {
+          if (error.response.status === 500) {
+            toast.error(error.response.data.message);
+          }
+        });
+    } else {
+      return;
+    }
   };
 
   return (
@@ -209,8 +240,22 @@ const AdminDashboard = () => {
               <td>{singleProduct.productCategory}</td>
               <td>{singleProduct.productDescription}</td>
               <td>
-                <button className="btn btn-primary"> Edit</button>
-                <button className="btn btn-danger ms-2"> Delete</button>
+                <Link
+                  to={`/admin/update/${singleProduct._id}`}
+                  className="btn btn-primary"
+                >
+                  {" "}
+                  Edit
+                </Link>
+                <button
+                  onClick={() => {
+                    handleDelete(singleProduct._id);
+                  }}
+                  className="btn btn-danger ms-2"
+                >
+                  {" "}
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
@@ -221,3 +266,9 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
+// Edit Product
+// Admin Dashboard (table) pro1
+// Make a route (Admin Edit Product)
+// Fill all the related information only
+// Ability to edit (Text, File)
