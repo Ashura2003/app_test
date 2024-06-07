@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleProductApi } from "../../../apis/Api";
+import { toast } from "react-toastify";
+import { getSingleProductApi, updateProductApi } from "../../../apis/Api";
 
 const UpdateProduct = () => {
   // get id from url
@@ -41,6 +42,34 @@ const UpdateProduct = () => {
     const file = event.target.files[0];
     setProductNewImage(file); // for backend
     setPreviewNewImage(URL.createObjectURL(file));
+  };
+
+  // Update Product
+  const handleUpdate = (e) => {
+    e.preventDefault();
+
+    // Make a form data object
+    const formData = new FormData();
+    formData.append("productName", productName);
+    formData.append("productPrice", productPrice);
+    formData.append("productCategory", productCategory);
+    formData.append("productDescription", productDescription);
+    if (productNewImage) {
+      formData.append("productImage", productNewImage);
+    }
+
+    // Make an Api call
+    updateProductApi(id, formData)
+      .then((res) => {
+        if (res.status === 201) {
+          toast.success(res.data.message);
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 500) {
+          toast.error(error.response.data.message);
+        }
+      });
   };
 
   return (
@@ -98,7 +127,10 @@ const UpdateProduct = () => {
               className="form-control"
             />
 
-            <button className="btn btn-danger w-100 mt-2">
+            <button
+              onClick={handleUpdate}
+              className="btn btn-danger w-100 mt-2"
+            >
               Update Product
             </button>
           </form>

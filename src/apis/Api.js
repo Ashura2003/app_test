@@ -29,4 +29,7 @@ export const getSingleProductApi = (id) =>
 export const deleteProduct = (id) =>
   Api.delete(`/api/product/delete_product/${id}`);
 
+export const updateProductApi = (id, data) =>
+  Api.put(`/api/product/update_product/${id}`, data);
+
 //http://localhost:5000/test
